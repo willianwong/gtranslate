@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/bregydoc/gtranslate"
+	"github.com/willianwong/gtranslate"
 	"golang.org/x/text/language"
 )
 

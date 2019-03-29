@@ -30,7 +30,7 @@ func translate(text, from, to string, withVerification bool) (string, error) {
 		}
 	}
 	t, _ := otto.ToValue(text)
-	urll := "https://translate.google.com/translate_a/single"
+	urll := "https://translate.google.cn/translate_a/single"
 	token := get(t, ttk)
 
 	data := map[string]string{

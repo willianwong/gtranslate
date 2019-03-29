@@ -106,7 +106,7 @@ func updateTTK(TTK otto.Value) otto.Value {
 	if ttk == now {
 		return TTK
 	} else {
-		resp, err := http.Get("https://translate.google.com")
+		resp, err := http.Get("https://translate.google.cn")
 		if err != nil {
 			panic(err)
 		}

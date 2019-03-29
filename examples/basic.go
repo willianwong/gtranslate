@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/bregydoc/gtranslate"
+	"github.com/willianwong/gtranslate"
 )
 
 func main() {
@@ -12,13 +12,13 @@ func main() {
 		text,
 		gtranslate.FromTo{
 			From: "en",
-			To:   "ja",
+			To:   "zh-CN",
 		},
 	)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Printf("en: %s | ja: %s \n", text, translated)
+	fmt.Printf("en: %s | zh-CN: %s \n", text, translated)
 	// en: Hello World | ja: こんにちは世界
 }
