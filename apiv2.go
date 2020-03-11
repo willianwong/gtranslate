@@ -1,6 +1,7 @@
 package gtranslate
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -18,7 +19,7 @@ func init() {
 	ttk, _ = otto.ToValue("0")
 }
 
-func translate(text, from, to string, withVerification bool) (string, error) {
+func translate(client *http.Client, text, from, to string, withVerification bool) (string, error) {
 	if withVerification {
 		if _, err := language.Parse(from); err != nil {
 			fmt.Println("[WARNING], '" + from + "' is a invalid language, switching to 'auto'")
@@ -30,7 +31,7 @@ func translate(text, from, to string, withVerification bool) (string, error) {
 		}
 	}
 	t, _ := otto.ToValue(text)
-	urll := "https://translate.google.cn/translate_a/single"
+	urll := "http://translate.google.cn/translate_a/single"
 	token := get(t, ttk)
 
 	data := map[string]string{
@@ -60,8 +61,11 @@ func translate(text, from, to string, withVerification bool) (string, error) {
 	}
 	parameters.Add(token["name"], token["value"])
 	u.RawQuery = parameters.Encode()
-	// fmt.Println(u)
-	r, err := http.Get(u.String())
+	//fmt.Println(u.String())
+
+	request, _ := http.NewRequest("POST", u.String(), bytes.NewBuffer([]byte(``)))
+	r, err := client.Do(request)
+	//r, err := http.Get(u.String())
 
 	if err != nil {
 		if err == http.ErrHandlerTimeout {
