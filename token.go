@@ -96,7 +96,7 @@ func sM(a otto.Value, TTK ...otto.Value) (otto.Value, error) {
 }
 
 // UpdateTTK ...
-func updateTTK(TTK otto.Value) otto.Value {
+func updateTTK(client *http.Client, TTK otto.Value) otto.Value {
 	t := time.Now().UnixNano() / 3600000
 	now := math.Floor(float64(t))
 	ttk, err := strconv.ParseFloat(TTK.String(), 64)
@@ -106,7 +106,8 @@ func updateTTK(TTK otto.Value) otto.Value {
 	if ttk == now {
 		return TTK
 	} else {
-		resp, err := http.Get("http://translate.google.cn")
+		resp, err := client.Get("https://translate.google.cn")
+		//resp, err := http.Get("http://translate.google.cn")
 		if err != nil {
 			panic(err)
 		}
@@ -132,8 +133,8 @@ func updateTTK(TTK otto.Value) otto.Value {
 }
 
 // Get ...
-func get(text otto.Value, ttk otto.Value) map[string]string {
-	ttk = updateTTK(ttk)
+func get(client *http.Client, text otto.Value, ttk otto.Value) map[string]string {
+	ttk = updateTTK(client, ttk)
 	tk, err := sM(text, ttk)
 
 	if err != nil {

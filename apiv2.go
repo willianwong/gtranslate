@@ -32,7 +32,7 @@ func translate(client *http.Client, text, from, to string, withVerification bool
 	}
 	t, _ := otto.ToValue(text)
 	urll := "http://translate.google.cn/translate_a/single"
-	token := get(t, ttk)
+	token := get(client, t, ttk)
 
 	data := map[string]string{
 		"client": "gtx",
